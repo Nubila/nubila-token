@@ -34,7 +34,9 @@ contract VestingManager is Ownable, Pausable {
     VestingSchedule[] private schedules;
 
     event ScheduleCreated(uint256 indexed id, uint256 totalAmount);
-    event Vested(uint256 indexed id, uint256 indexed termIndex, uint256 indexed periodIdx, address beneficiary, uint256 amount);
+    event Vested(
+        uint256 indexed id, uint256 indexed termIndex, uint256 indexed periodIdx, address beneficiary, uint256 amount
+    );
     event BeneficiaryUpdated(uint256 indexed id, address indexed newBeneficiary);
 
     constructor(address _token, uint256 _tgeTimestamp, address[] memory beneficiaries) Ownable(msg.sender) {
@@ -44,69 +46,70 @@ contract VestingManager is Ownable, Pausable {
         token = IERC20(_token);
         tgeTimestamp = _tgeTimestamp;
 
-        uint256 A_device    = 210_000_000 ether;
-        uint256 A_node      = 200_000_000 ether;
-        uint256 A_hacker1   = 62_500_000 ether;
-        uint256 A_hacker2   = 80_000_000 ether;
-        uint256 A_pos       = 65_000_000 ether;
-        uint256 A_treasury  = 60_000_000 ether;
-        uint256 A_team      = 140_000_000 ether;
-        uint256 A_liq       = 22_500_000 ether;
-        uint256 A_airdrop   = 75_000_000 ether;
-        uint256 A_marketing = 85_000_000 ether;
+        uint256 A_device = 210_000_000 ether;
+        uint256 A_node = 200_000_000 ether;
+        uint256 A_hacker1 = 62_500_000 ether;
+        uint256 A_hacker2 = 80_000_000 ether;
+        uint256 A_pos = 65_000_000 ether;
+        uint256 A_treasury = 65_000_000 ether;
+        uint256 A_team = 140_000_000 ether;
+        uint256 A_liq = 22_500_000 ether;
+        uint256 A_airdrop = 75_000_000 ether;
+        uint256 A_marketing = 80_000_000 ether;
 
         Term[] memory terms;
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: 0, period: SEASON, num: 20, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: 0, period: SEASON, num: 20, next: 0});
             _createScheduleInternal(beneficiaries[0], A_device, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: 0, period: SEASON, num: 20, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: 0, period: SEASON, num: 20, next: 0});
             _createScheduleInternal(beneficiaries[1], A_node, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: YEAR, period: SEASON, num: 12, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: YEAR, period: SEASON, num: 12, next: 0});
             _createScheduleInternal(beneficiaries[2], A_hacker1, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: YEAR, period: SEASON, num: 8, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: YEAR, period: SEASON, num: 8, next: 0});
             _createScheduleInternal(beneficiaries[3], A_hacker2, terms);
-        }{
+        }
+        {
             terms = new Term[](2);
-            terms[0] = Term({ percentage: 250_000, cliff: 0, period: 0, num: 1, next: 0 });
-            terms[1] = Term({ percentage: 750_000, cliff: SEASON, period: SEASON, num: 20, next: 0 });
+            terms[0] = Term({percentage: 250_000, cliff: 0, period: 0, num: 1, next: 0});
+            terms[1] = Term({percentage: 750_000, cliff: SEASON, period: SEASON, num: 20, next: 0});
             _createScheduleInternal(beneficiaries[4], A_pos, terms);
         }
         {
             terms = new Term[](2);
-            terms[0] = Term({ percentage: 400_000, cliff: 0, period: 0, num: 1, next: 0 });
-            terms[1] = Term({ percentage: 600_000, cliff: SEASON, period: SEASON, num: 4, next: 0 });
+            terms[0] = Term({percentage: 400_000, cliff: 0, period: 0, num: 1, next: 0});
+            terms[1] = Term({percentage: 600_000, cliff: SEASON, period: SEASON, num: 4, next: 0});
             _createScheduleInternal(beneficiaries[5], A_treasury, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: YEAR, period: SEASON, num: 12, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: YEAR, period: SEASON, num: 12, next: 0});
             _createScheduleInternal(beneficiaries[6], A_team, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: 0, period: 0, num: 1, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: 0, period: 0, num: 1, next: 0});
             _createScheduleInternal(beneficiaries[7], A_liq, terms);
         }
         {
             terms = new Term[](3);
-            terms[0] = Term({ percentage: 250_000, cliff: 0, period: 0, num: 1, next: 0 });
-            terms[1] = Term({ percentage: 250_000, cliff: SEASON, period: 0, num: 1, next: 0 });
-            terms[2] = Term({ percentage: 500_000, cliff: 2 * SEASON, period: 0, num: 1, next: 0 });
+            terms[0] = Term({percentage: 250_000, cliff: 0, period: 0, num: 1, next: 0});
+            terms[1] = Term({percentage: 250_000, cliff: SEASON, period: 0, num: 1, next: 0});
+            terms[2] = Term({percentage: 500_000, cliff: 2 * SEASON, period: 0, num: 1, next: 0});
             _createScheduleInternal(beneficiaries[8], A_airdrop, terms);
         }
         {
             terms = new Term[](1);
-            terms[0] = Term({ percentage: PPM, cliff: 0, period: 0, num: 1, next: 0 });
+            terms[0] = Term({percentage: PPM, cliff: 0, period: 0, num: 1, next: 0});
             _createScheduleInternal(beneficiaries[9], A_marketing, terms);
         }
     }
@@ -120,14 +123,10 @@ contract VestingManager is Ownable, Pausable {
         emit BeneficiaryUpdated(scheduleId, newBeneficiary);
     }
 
-    function _createScheduleInternal(
-        address beneficiary,
-        uint256 totalAmount,
-        Term[] memory terms
-    ) internal {
+    function _createScheduleInternal(address beneficiary, uint256 totalAmount, Term[] memory terms) internal {
         require(beneficiary != address(0), "beneficiary is zero");
         uint256 sumWeight = 0;
-        for (uint i = 0; i < terms.length; ++i) {
+        for (uint256 i = 0; i < terms.length; ++i) {
             if (terms[i].period == 0) {
                 require(terms[i].num == 1, "num must 1 when period==0");
             } else {
@@ -142,10 +141,10 @@ contract VestingManager is Ownable, Pausable {
         s.totalAmount = totalAmount;
         s.vestedAmount = 0;
         s.termIndex = 0;
-        for (uint i = 0; i < terms.length; ++i) {
+        for (uint256 i = 0; i < terms.length; ++i) {
             s.terms.push(terms[i]);
         }
-       
+
         emit ScheduleCreated(schedules.length - 1, totalAmount);
         emit BeneficiaryUpdated(schedules.length - 1, beneficiary);
     }
@@ -191,13 +190,11 @@ contract VestingManager is Ownable, Pausable {
         return schedules.length;
     }
 
-    function getSchedule(uint256 scheduleId) external view returns (
-        address beneficiary,
-        uint256 totalAmount,
-        uint256 vestedAmount,
-        uint256 termIndex,
-        Term[] memory terms
-    ) {
+    function getSchedule(uint256 scheduleId)
+        external
+        view
+        returns (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, Term[] memory terms)
+    {
         require(scheduleId < schedules.length, "invalid index");
         VestingSchedule storage s = schedules[scheduleId];
         return (s.beneficiary, s.totalAmount, s.vestedAmount, s.termIndex, s.terms);

@@ -4,16 +4,19 @@ pragma solidity ^0.8.13;
 import {Script, console} from "forge-std/Script.sol";
 import {NubilaNetwork} from "../src/NubilaNetwork.sol";
 import {VestingManager} from "../src/VestingManager.sol";
-contract NubilaNetworkScript is Script {
 
+contract NubilaNetworkScript is Script {
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
         uint256 tge = uint256(vm.envUint("TGE"));
         console.log("TGE read from env:", tge);
+
         NubilaNetwork nubilaNetwork = new NubilaNetwork(msg.sender);
+        // NubilaNetwork nubilaNetwork = new NubilaNetwork(address(0xf14C72be862Ca65d7DCbb10f3d6ECdF641d85021));
         console.log("NubilaNetwork deployed to:", address(nubilaNetwork));
+
         address[] memory beneficiaries = new address[](10);
         beneficiaries[0] = address(0xB2C2afD942230a24AE2ffd33026F7dc925d2F384); // Device
         beneficiaries[1] = address(0x5c846C7ED2199511c14ac7613fC7cab4862E06d1); // Node

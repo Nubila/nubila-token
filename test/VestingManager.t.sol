@@ -13,7 +13,9 @@ contract VestingManagerTest is Test {
 
     event Transfer(address indexed from, address indexed to, uint256 amount);
     event ScheduleCreated(uint256 indexed id, uint256 totalAmount);
-    event Vested(uint256 indexed id, uint256 indexed termIndex, uint256 indexed periodIdx, address beneficiary, uint256 amount);
+    event Vested(
+        uint256 indexed id, uint256 indexed termIndex, uint256 indexed periodIdx, address beneficiary, uint256 amount
+    );
     event BeneficiaryUpdated(uint256 indexed id, address indexed newBeneficiary);
     event Paused(address account);
     event Unpaused(address account);
@@ -53,7 +55,7 @@ contract VestingManagerTest is Test {
         emit BeneficiaryUpdated(3, address(0x4));
         emit ScheduleCreated(4, 65_000_000 ether);
         emit BeneficiaryUpdated(4, address(0x5));
-        emit ScheduleCreated(5, 60_000_000 ether);
+        emit ScheduleCreated(5, 65_000_000 ether);
         emit BeneficiaryUpdated(5, address(0x6));
         emit ScheduleCreated(6, 14_000_000 ether);
         emit BeneficiaryUpdated(6, address(0x7));
@@ -61,7 +63,7 @@ contract VestingManagerTest is Test {
         emit BeneficiaryUpdated(7, address(0x8));
         emit ScheduleCreated(8, 75_000_000 ether);
         emit BeneficiaryUpdated(8, address(0x9));
-        emit ScheduleCreated(9, 85_000_000 ether);
+        emit ScheduleCreated(9, 80_000_000 ether);
         emit BeneficiaryUpdated(9, address(0xA));
         manager = new VestingManager(address(token), tge, beneficiaries);
         vm.expectEmit(true, true, false, true, address(token));
@@ -94,7 +96,13 @@ contract VestingManagerTest is Test {
 
     function testGetSchedule() public view {
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(0);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(0);
             assertEq(beneficiary, address(0x1));
             assertEq(totalAmount, 210_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -106,7 +114,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 20);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(1);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(1);
             assertEq(beneficiary, address(0x2));
             assertEq(totalAmount, 200_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -118,7 +132,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 20);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(2);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(2);
             assertEq(beneficiary, address(0x3));
             assertEq(totalAmount, 62_500_000 ether);
             assertEq(vestedAmount, 0);
@@ -130,7 +150,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 12);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(3);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(3);
             assertEq(beneficiary, address(0x4));
             assertEq(totalAmount, 80_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -142,7 +168,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 8);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(4);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(4);
             assertEq(beneficiary, address(0x5));
             assertEq(totalAmount, 65_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -158,9 +190,15 @@ contract VestingManagerTest is Test {
             assertEq(terms[1].num, 20);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(5);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(5);
             assertEq(beneficiary, address(0x6));
-            assertEq(totalAmount, 60_000_000 ether);
+            assertEq(totalAmount, 65_000_000 ether);
             assertEq(vestedAmount, 0);
             assertEq(termIndex, 0);
             assertEq(terms.length, 2);
@@ -174,7 +212,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[1].num, 4);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(6);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(6);
             assertEq(beneficiary, address(0x7));
             assertEq(totalAmount, 140_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -186,7 +230,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 12);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(7);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(7);
             assertEq(beneficiary, address(0x8));
             assertEq(totalAmount, 22_500_000 ether);
             assertEq(vestedAmount, 0);
@@ -198,7 +248,13 @@ contract VestingManagerTest is Test {
             assertEq(terms[0].num, 1);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(8);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(8);
             assertEq(beneficiary, address(0x9));
             assertEq(totalAmount, 75_000_000 ether);
             assertEq(vestedAmount, 0);
@@ -218,9 +274,15 @@ contract VestingManagerTest is Test {
             assertEq(terms[2].num, 1);
         }
         {
-            (address beneficiary, uint256 totalAmount, uint256 vestedAmount, uint256 termIndex, VestingManager.Term[] memory terms) = manager.getSchedule(9);
+            (
+                address beneficiary,
+                uint256 totalAmount,
+                uint256 vestedAmount,
+                uint256 termIndex,
+                VestingManager.Term[] memory terms
+            ) = manager.getSchedule(9);
             assertEq(beneficiary, address(0xA));
-            assertEq(totalAmount, 85_000_000 ether);
+            assertEq(totalAmount, 80_000_000 ether);
             assertEq(vestedAmount, 0);
             assertEq(termIndex, 0);
             assertEq(terms.length, 1);
@@ -234,7 +296,7 @@ contract VestingManagerTest is Test {
     function testBeforeTGE() public {
         vm.warp(tge - 30 seconds);
         uint256 totalAmount = 0;
-        for (uint i = 0; i < 10; ++i) {
+        for (uint256 i = 0; i < 10; ++i) {
             assertEq(manager.claimable(i), 0);
             totalAmount += token.balanceOf(beneficiaries[i]);
         }
@@ -242,18 +304,19 @@ contract VestingManagerTest is Test {
     }
 
     function testScheduleAfterTGE() public {
-        {// tge
+        {
+            // tge
             vm.warp(tge + 1 minutes);
             assertEq(manager.claimable(0), 10_500_000 ether);
             assertEq(manager.claimable(1), 10_000_000 ether);
             assertEq(manager.claimable(2), 0 ether);
             assertEq(manager.claimable(3), 0 ether);
             assertEq(manager.claimable(4), 16_250_000 ether);
-            assertEq(manager.claimable(5), 24_000_000 ether);
+            assertEq(manager.claimable(5), 26_000_000 ether);
             assertEq(manager.claimable(6), 0 ether);
             assertEq(manager.claimable(7), 22_500_000 ether);
             assertEq(manager.claimable(8), 18_750_000 ether);
-            assertEq(manager.claimable(9), 85_000_000 ether);
+            assertEq(manager.claimable(9), 80_000_000 ether);
             vm.expectEmit(true, true, true, true, address(manager));
             emit Paused(address(this));
             manager.pause();
@@ -272,7 +335,7 @@ contract VestingManagerTest is Test {
             emit Vested(4, 0, 0, beneficiaries[4], 16_250_000 ether);
             manager.claim(4);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(5, 0, 0, beneficiaries[5], 24_000_000 ether);
+            emit Vested(5, 0, 0, beneficiaries[5], 26_000_000 ether);
             manager.claim(5);
             vm.expectEmit(true, true, true, true, address(manager));
             emit Vested(7, 0, 0, beneficiaries[7], 22_500_000 ether);
@@ -281,31 +344,32 @@ contract VestingManagerTest is Test {
             emit Vested(8, 0, 0, beneficiaries[8], 18_750_000 ether);
             manager.claim(8);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(9, 0, 0, beneficiaries[9], 85_000_000 ether);
+            emit Vested(9, 0, 0, beneficiaries[9], 80_000_000 ether);
             manager.claim(9);
             assertEq(token.balanceOf(beneficiaries[0]), 10_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[1]), 10_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[2]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[3]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 16_250_000 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 24_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 26_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 18_750_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 89 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 3 months
+        {
+            // 3 months
             vm.warp(tge + 92 days);
             assertEq(manager.claimable(0), 10_500_000 ether);
             assertEq(manager.claimable(1), 10_000_000 ether);
             assertEq(manager.claimable(2), 0 ether);
             assertEq(manager.claimable(3), 0 ether);
             assertEq(manager.claimable(4), 2_437_500 ether);
-            assertEq(manager.claimable(5), 9_000_000 ether);
+            assertEq(manager.claimable(5), 9_750_000 ether);
             assertEq(manager.claimable(6), 0 ether);
             assertEq(manager.claimable(7), 0 ether);
             assertEq(manager.claimable(8), 18_750_000 ether);
@@ -320,7 +384,7 @@ contract VestingManagerTest is Test {
             emit Vested(4, 1, 0, beneficiaries[4], 2_437_500 ether);
             manager.claim(4);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(5, 1, 0, beneficiaries[5], 9_000_000 ether);
+            emit Vested(5, 1, 0, beneficiaries[5], 9_750_000 ether);
             manager.claim(5);
             vm.expectEmit(true, true, true, true, address(manager));
             emit Vested(8, 1, 0, beneficiaries[8], 18_750_000 ether);
@@ -330,24 +394,25 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[3]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 18_687_500 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 33_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 35_750_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 37_500_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 119 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 6 months
+        {
+            // 6 months
             vm.warp(tge + 180 days);
             assertEq(manager.claimable(0), 10_500_000 ether);
             assertEq(manager.claimable(1), 10_000_000 ether);
             assertEq(manager.claimable(2), 0 ether);
             assertEq(manager.claimable(3), 0 ether);
             assertEq(manager.claimable(4), 2_437_500 ether);
-            assertEq(manager.claimable(5), 9_000_000 ether);
+            assertEq(manager.claimable(5), 9_750_000 ether);
             assertEq(manager.claimable(6), 0 ether);
             assertEq(manager.claimable(7), 0 ether);
             assertEq(manager.claimable(8), 37_500_000 ether);
@@ -362,7 +427,7 @@ contract VestingManagerTest is Test {
             emit Vested(4, 1, 1, beneficiaries[4], 2_437_500 ether);
             manager.claim(4);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(5, 1, 1, beneficiaries[5], 9_000_000 ether);
+            emit Vested(5, 1, 1, beneficiaries[5], 9_750_000 ether);
             manager.claim(5);
             vm.expectEmit(true, true, true, true, address(manager));
             emit Vested(8, 2, 0, beneficiaries[8], 37_500_000 ether);
@@ -372,24 +437,25 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[3]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 21_125_000 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 42_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 45_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 0 ether);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 75_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 269 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 12 months
+        {
+            // 12 months
             vm.warp(tge + 4 * 90 days);
             assertEq(manager.claimable(0), 10_500_000 ether);
             assertEq(manager.claimable(1), 10_000_000 ether);
             assertEq(manager.claimable(2), 5_208_333 ether + 333_333_333_333_333_333);
             assertEq(manager.claimable(3), 10_000_000 ether);
             assertEq(manager.claimable(4), 2_437_500 ether);
-            assertEq(manager.claimable(5), 9_000_000 ether);
+            assertEq(manager.claimable(5), 9_750_000 ether);
             assertEq(manager.claimable(6), 11_666_666 ether + 666_666_666_666_666_666);
             assertEq(manager.claimable(7), 0 ether);
             assertEq(manager.claimable(8), 0 ether);
@@ -410,7 +476,7 @@ contract VestingManagerTest is Test {
             emit Vested(4, 1, 2, beneficiaries[4], 2_437_500 ether);
             manager.claim(4);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(5, 1, 2, beneficiaries[5], 9_000_000 ether);
+            emit Vested(5, 1, 2, beneficiaries[5], 9_750_000 ether);
             manager.claim(5);
             vm.expectEmit(true, true, true, true, address(manager));
             emit Vested(6, 0, 0, beneficiaries[6], 11_666_666 ether + 666_666_666_666_666_666);
@@ -420,17 +486,17 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 5_208_333 ether + 333_333_333_333_333_333);
             assertEq(token.balanceOf(beneficiaries[3]), 10_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 23_562_500 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 51_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 55_250_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 11_666_666 ether + 666_666_666_666_666_666);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 75_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             assertEq(manager.claimable(0), 10_500_000 ether);
             assertEq(manager.claimable(1), 10_000_000 ether);
             assertEq(manager.claimable(2), 0 ether);
             assertEq(manager.claimable(3), 0 ether);
             assertEq(manager.claimable(4), 2_437_500 ether);
-            assertEq(manager.claimable(5), 9_000_000 ether);
+            assertEq(manager.claimable(5), 9_750_000 ether);
             assertEq(manager.claimable(6), 0 ether);
             assertEq(manager.claimable(7), 0 ether);
             vm.expectEmit(true, true, true, true, address(manager));
@@ -443,20 +509,21 @@ contract VestingManagerTest is Test {
             emit Vested(4, 1, 3, beneficiaries[4], 2_437_500 ether);
             manager.claim(4);
             vm.expectEmit(true, true, true, true, address(manager));
-            emit Vested(5, 1, 3, beneficiaries[5], 9_000_000 ether);
+            emit Vested(5, 1, 3, beneficiaries[5], 9_750_000 ether);
             manager.claim(5);
             assertEq(token.balanceOf(beneficiaries[0]), 52_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[1]), 50_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 26_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 60_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 65_000_000 ether);
             vm.warp(tge + 449 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 33 months
+        {
+            // 33 months
             vm.warp(tge + 11 * 90 days);
-            for (uint i = 5; i < 12; ++i) {
+            for (uint256 i = 5; i < 12; ++i) {
                 assertEq(manager.claimable(0), 10_500_000 ether);
                 assertEq(manager.claimable(1), 10_000_000 ether);
                 assertEq(manager.claimable(2), 5_208_333 ether + 333_333_333_333_333_333);
@@ -491,19 +558,20 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 41_666_666 ether + 666_666_666_666_666_664);
             assertEq(token.balanceOf(beneficiaries[3]), 80_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 43_062_500 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 60_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 65_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 93_333_333 ether + 333_333_333_333_333_328);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 75_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 1079 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 45 months
+        {
+            // 45 months
             vm.warp(tge + 15 * 90 days);
-            for (uint i = 12; i < 16; ++i) {
+            for (uint256 i = 12; i < 16; ++i) {
                 assertEq(manager.claimable(0), 10_500_000 ether);
                 assertEq(manager.claimable(1), 10_000_000 ether);
                 assertEq(manager.claimable(3), 0 ether);
@@ -546,19 +614,20 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 62_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[3]), 80_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 52_812_500 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 60_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 65_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 140_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 75_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 1439 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 60 months
+        {
+            // 60 months
             vm.warp(tge + 19 * 90 days);
-            for (uint i = 16; i < 20; ++i) {
+            for (uint256 i = 16; i < 20; ++i) {
                 assertEq(manager.claimable(0), 10_500_000 ether);
                 assertEq(manager.claimable(1), 10_000_000 ether);
                 assertEq(manager.claimable(2), 0 ether);
@@ -584,23 +653,24 @@ contract VestingManagerTest is Test {
             assertEq(token.balanceOf(beneficiaries[2]), 62_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[3]), 80_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[4]), 62_562_500 ether);
-            assertEq(token.balanceOf(beneficiaries[5]), 60_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[5]), 65_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[6]), 140_000_000 ether);
             assertEq(token.balanceOf(beneficiaries[7]), 22_500_000 ether);
             assertEq(token.balanceOf(beneficiaries[8]), 75_000_000 ether);
-            assertEq(token.balanceOf(beneficiaries[9]), 85_000_000 ether);
+            assertEq(token.balanceOf(beneficiaries[9]), 80_000_000 ether);
             vm.warp(tge + 1799 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
         }
-        {// 61 months
+        {
+            // 61 months
             vm.warp(tge + 1800 days);
-            for (uint i = 0; i < 4; i++) {
+            for (uint256 i = 0; i < 4; i++) {
                 assertEq(manager.claimable(i), 0 ether);
             }
             assertEq(manager.claimable(4), 2_437_500 ether);
-            for (uint i = 5; i < 10; i++) {
+            for (uint256 i = 5; i < 10; i++) {
                 assertEq(manager.claimable(i), 0 ether);
             }
             vm.expectEmit(true, true, true, true, address(manager));
@@ -608,15 +678,14 @@ contract VestingManagerTest is Test {
             manager.claim(4);
             assertEq(token.balanceOf(beneficiaries[4]), 65_000_000 ether);
             vm.warp(tge + 5000 days);
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 assertEq(manager.claimable(i), 0);
             }
             uint256 totalAmount = 0;
-            for (uint i = 0; i < 10; ++i) {
+            for (uint256 i = 0; i < 10; ++i) {
                 totalAmount += token.balanceOf(beneficiaries[i]);
             }
             assertEq(totalAmount, token.totalSupply());
         }
     }
-
 }
